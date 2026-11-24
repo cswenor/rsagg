@@ -146,7 +146,19 @@ impl Context {
 
         for prefix in prepare_prefixes(prefixes) {
             let prefix_bytes = prefix.as_bytes();
-            let mut prefix_chunk = vec![0u8; 64];
+
+            const PREFIX_CHUNK_SIZE: usize = 64;
+
+            if prefix_bytes.len() > PREFIX_CHUNK_SIZE {
+                panic!(
+                    "Prefix '{}' is {} bytes; the maximum supported length is {}.",
+                    prefix,
+                    prefix_bytes.len(),
+                    PREFIX_CHUNK_SIZE
+                );
+            }
+
+            let mut prefix_chunk = vec![0u8; PREFIX_CHUNK_SIZE];
             prefix_chunk[..prefix_bytes.len()].copy_from_slice(prefix_bytes);
 
             prefix_chunks.extend(prefix_chunk);
