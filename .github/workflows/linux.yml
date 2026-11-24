@@ -18,8 +18,11 @@ jobs:
         sudo apt-get -y install ocl-icd-opencl-dev
         sudo apt-get -y install opencl-headers
 
+    - name: Pin Rust toolchain
+      run: rustup toolchain install 1.97.1 --profile minimal
+
     - name: Build
-      run: cargo build --release
+      run: cargo +1.97.1 build --release
 
     - name: Create release
       uses: ncipollo/release-action@v1

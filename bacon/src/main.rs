@@ -359,14 +359,6 @@ fn optimize(args: OptimizeCommand) {
 
     prefixes = prepare_prefixes(&prefixes);
 
-    if args.file != "" {
-        let file = std::fs::File::open(args.file).unwrap();
-        let reader = std::io::BufReader::new(file);
-        for line in reader.lines() {
-            prefixes.push(line.unwrap().trim().to_string());
-        }
-    }
-
     if prefixes.len() == 0 {
         prefixes.push("AAAAAAAAAA".to_string());
     }
